@@ -1,5 +1,10 @@
-var celcius = true;
-var weatherData = {};
+var celsius = true;
+var weatherData = {
+	cityName: "",
+	temperature: "",
+	weather: "",
+	icon: ""	
+};
 
 init()
 
@@ -24,35 +29,54 @@ function success(position){
 
 function showWeatherData(data) {
 	
-	var cityName = data.name;
-	var temperature = data.main.temp.toFixed(1);
-	var weather = data.weather[0].main
-	var icon = data.weather[0].icon;
+	weather.cityName = data.name;
+	weather.temperature = data.main.temp.toFixed(1);
+	weather.weather = data.weather[0].main
+	weather.icon = data.weather[0].icon;
 
-	if(!celcius){
-		temperature = convertToFahrenheit(temperature);
-	}
-
-	$("#cityName").html(cityName);
-	$("#temperature").html(temperature);
-	$("#weather").html(weather);
-	$("#weatherIcon").attr({"src": icon,
-							"alt": weather + " Icon"});
+	updateCityName();
+	updateMainWeather();
+	updateTemperature();
+	updateWeatherIcon();
 };
+
+function updateCityName(){
+	$("#cityName").html(weather.cityName);
+}
+
+function updateMainWeather(){
+	$("#temperature").html(weather.temperature);
+}
+
+function updateTemperature(){
+	$("#weather").html(weather.weather);
+}
+
+function updateWeatherIcon(){
+	$("#weatherIcon").attr({"src": weather.icon,
+							"alt": weather.weather + " Icon"});
+}
 
 function setupUnitsButton() {
 	$("#units").click(function(){
-		if(celcius){
+		if(celsius){
 			$("#units").html("F");
+			weather.temperature = convertToFahrenheit(weather.temperature);
 		} else {
 			$("#units").html("C")
+			weather.temperature = convertToCelsius(weather.temperature);
 		};
-		celcius = !celcius;
+		celsius = !celsius;
+		$("#temperature").html(weather.temperature);
 	});
 };
 
 function convertToFahrenheit(temperature) {
-	return (temperature * 1.8 + 32)
+	return (temperature * 1.8 + 32).toFixed(1);
+};
+
+function convertToCelsius(temperature) {
+	return ((temperature - 32) * 0.5556).toFixed(1);
 };
 
 function errorWeather() {
