@@ -4,6 +4,10 @@ var weather = {
 	celsius: true,
 	humidity: "",
 	pressure: "",
+	clouds: "",
+	description: "",
+	windSpeed: "",
+	windDirection: "",
 	type: "",
 	icon: "",
 	convertToFahrenheit:function() {
@@ -41,14 +45,19 @@ function updateWeatherData(data) {
 	weather.temperature = data.main.temp.toFixed(1);
 	weather.pressure = data.main.pressure.toFixed(1)+" mb";
 	weather.humidity = data.main.humidity.toFixed(1)+"%";
+	weather.clouds = data.clouds.all+"%";
+	weather.windSpeed = data.wind.speed + " m/s";
 	weather.type = data.weather[0].main;
+	weather.description = toTitleCase(data.weather[0].description);
 	weather.icon = data.weather[0].icon;
 
 	updateCityName();
-	updateWeatherType();
+	updateWeatherDescription();
 	updateTemperature();
 	updatePressure();
 	updateHumidity();
+	updateClouds();
+	updateWind();
 	updateWeatherIcon();
 	updatedBackgroundImage();
 };
@@ -59,6 +68,10 @@ function updatedBackgroundImage(){
 		imageUrl = "https://images.unsplash.com/photo-1500320821405-8fc1732209ca?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=60dabe438f1984eec277736ff1004ac8&auto=format&fit=crop&w=1950&q=80";
 	} else if (weather.type === "Clouds") {
 		imageUrl = "https://images.unsplash.com/photo-1518277748204-ba05cb84d9f5?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=9ea3b1a82b08a4ba9764a8788c9cdaaa&auto=format&fit=crop&w=1949&q=80";
+	} else if (weather.type === "Thunderstorm") {
+		imageUrl = "https://images.unsplash.com/photo-1525897174292-dbe24620b264?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=95cc2c20eea46f8f8cd2a09196b234fe&auto=format&fit=crop&w=1950&q=80";
+	}  else if (weather.type === "Rain") {
+		imageUrl = "https://images.unsplash.com/photo-1438449805896-28a666819a20?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=950c1c30e781da5fa29e7db2f185c360&auto=format&fit=crop&w=1950&q=80";
 	}
 	$("body").css("background-image", "url(" + imageUrl + ")")
 	
@@ -68,8 +81,18 @@ function updateCityName(){
 	$("#cityName").html(weather.cityName);
 }
 
-function updateWeatherType(){
-	$("#weather").html(weather.type);
+function updateWeatherDescription(){
+	$("#weather").html(weather.description);
+}
+
+function updateClouds(){
+	$("#clouds").html(weather.clouds);
+}
+
+function updateWind(){
+	$("#windSpeed").html(weather.windSpeed);
+	$("#windDirection").removeClass("wi-na");
+	$("#windDirection").addClass("wi-wind","towards-" + weather.windDirection + "-deg");
 }
 
 function updateTemperature(){
@@ -113,3 +136,9 @@ function errorWeather() {
 function errorLocation() {
     alert("Unable to retrieve your location");
 };
+
+function toTitleCase(str) {
+    return str.replace(/\w\S*/g, function(txt){
+        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    });
+}

@@ -4,21 +4,55 @@
 		<title>Weather App</title>
 		<script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 		<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.9/css/weather-icons.min.css">
-		<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.9/font/weathericons-regular-webfont.svg">
+		<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.9/css/weather-icons-wind.min.css">
+		<!-- <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.9/font/weathericons-regular-webfont.svg"> -->
 		<link rel="stylesheet" type="text/css" href="css/weather.css">
 	</head>
 	<body>
-		<h1>Local Weather App</h1>
+		<h1>Current Weather Report</h1>
+		<hr />
 		<div>
 			<h2 id="cityName"><i class="wi wi-na"></i></h2>
 			<div>
 				<i class="wi wi-thermometer"></i> <span id="temperature"><i class="wi wi-na"></i></span>
 				<button id="units"><i class="wi wi-celsius"></i></button>
-				<i class="wi wi-humidity"></i> Humidity: <span id="humidity"><i class="wi wi-na"></i></span>
-				<i class="wi wi-barometer"></i> Pressure: <span id="pressure"><i class="wi wi-na"></i></span>
+				<p id="weather"><i class="wi wi-na"></i></p>
+				<img src="" alt="" id="weatherIcon">
 			</div>
-			<p id="weather"><i class="wi wi-na"></i></p>
-			<img src="" alt="" id="weatherIcon">
+
+			<div>
+				Wind: <span id="windSpeed"></span> <i class="wi wi-na" id="windDirection"></i>
+			</div>
+
+			<div>
+				<table>
+					<tr>
+						<td>
+							<i class="wi wi-humidity"></i> Humidity:
+						</td>
+						<td>
+							<span id="humidity"><i class="wi wi-na"></i></span>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<i class="wi wi-barometer"></i> Pressure:
+						</td>
+						<td>
+							<span id="pressure"><i class="wi wi-na"></i></span>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<i class="wi wi-cloudy"></i> Clouds:
+						</td>
+						<td>
+							<span id="clouds"><i class="wi wi-na"></i></span>
+						</td>
+					</tr>
+				</table>
+			</div>
+
 			<script type="text/javascript" src="js/weather.js"></script>
 		</div>
 	</body>
