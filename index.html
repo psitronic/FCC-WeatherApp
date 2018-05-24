@@ -5,55 +5,51 @@
 		<script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 		<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.9/css/weather-icons.min.css">
 		<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.9/css/weather-icons-wind.min.css">
+		<link href="https://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet">
 		<!-- <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.9/font/weathericons-regular-webfont.svg"> -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="css/weather.css">
 	</head>
 	<body>
-		<h1>Current Weather Report</h1>
-		<hr />
-		<div>
-			<h2 id="cityName"><i class="wi wi-na"></i></h2>
-			<div>
-				<i class="wi wi-thermometer"></i> <span id="temperature"><i class="wi wi-na"></i></span>
-				<button id="units"><i class="wi wi-celsius"></i></button>
-				<p id="weather"><i class="wi wi-na"></i></p>
-				<img src="" alt="" id="weatherIcon">
+		<div class="container">
+
+			<div class="row">
+				<div class="col-lg-12">
+					<h1>Current Weather Report</h1>
+					<h2 id="cityName"><i class="wi wi-na"></i></h2>
+				</div>
 			</div>
 
-			<div>
-				Wind: <span id="windSpeed"></span> <i class="wi wi-na" id="windDirection"></i>
+			<div class="row" id="content">
+				<div class="col-lg-4 col-sm-4" id="main">
+					<img src="" alt="" id="weatherIcon" width="50" height="50">
+					<p><span id="weather"><i class="wi wi-na"></i></span> </p>
+					Wind: <span id="windSpeed"></span> <i class="wi wi-na" id="windDirection"></i>
+				</div>
+
+				<div class="col-lg-4 col-sm-4" id="units">
+					<i class="wi wi-thermometer"></i> <span id="temperature"><i class="wi wi-na"></i></span>
+					<i class="wi wi-celsius"></i>
+				</div>
+
+				<div class="col-lg-4 col-sm-4" id="parameters">
+					<p><i class="wi wi-humidity"></i> Humidity: <span id="humidity"><i class="wi wi-na"></i></span></p>
+					<p><i class="wi wi-barometer"></i> Pressure: <span id="pressure"><i class="wi wi-na"></i></span></p>
+					<p><i class="wi wi-cloudy"></i> Clouds: <span id="clouds"><i class="wi wi-na"></i></span></p>
+				</div>
 			</div>
 
-			<div>
-				<table>
-					<tr>
-						<td>
-							<i class="wi wi-humidity"></i> Humidity:
-						</td>
-						<td>
-							<span id="humidity"><i class="wi wi-na"></i></span>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<i class="wi wi-barometer"></i> Pressure:
-						</td>
-						<td>
-							<span id="pressure"><i class="wi wi-na"></i></span>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<i class="wi wi-cloudy"></i> Clouds:
-						</td>
-						<td>
-							<span id="clouds"><i class="wi wi-na"></i></span>
-						</td>
-					</tr>
-				</table>
-			</div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div id="copyright">
+                        © 2018 Andrey A Sidorenko. All rights reserved.
+                    </div>
+                </div>
+            </div>
 
-			<script type="text/javascript" src="js/weather.js"></script>
 		</div>
+
+		<script type="text/javascript" src="js/weather.js"></script>
+
 	</body>
 </html>
