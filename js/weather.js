@@ -2,6 +2,8 @@ var weather = {
 	cityName: "",
 	temperature: "",
 	celsius: true,
+	humidity: "",
+	pressure: "",
 	type: "",
 	icon: "",
 	convertToFahrenheit:function() {
@@ -37,12 +39,16 @@ function updateWeatherData(data) {
 	
 	weather.cityName = data.name;
 	weather.temperature = data.main.temp.toFixed(1);
+	weather.pressure = data.main.pressure.toFixed(1)+" mb";
+	weather.humidity = data.main.humidity.toFixed(1)+"%";
 	weather.type = data.weather[0].main;
 	weather.icon = data.weather[0].icon;
 
 	updateCityName();
 	updateWeatherType();
 	updateTemperature();
+	updatePressure();
+	updateHumidity();
 	updateWeatherIcon();
 	updatedBackgroundImage();
 };
@@ -70,6 +76,14 @@ function updateTemperature(){
 	$("#temperature").html(weather.temperature);
 }
 
+function updatePressure(){
+	$("#pressure").html(weather.pressure);
+}
+
+function updateHumidity(){
+	$("#humidity").html(weather.humidity);
+}
+
 function updateWeatherIcon(){
 	$("#weatherIcon").attr({"src": weather.icon,
 							"alt": weather.type + " Icon"});
@@ -78,10 +92,12 @@ function updateWeatherIcon(){
 function setupUnitsButton() {
 	$("#units").click(function(){
 		if(weather.celsius){
-			$("#units").html("F");
+			$("#units i").removeClass("wi-celsius")
+			$("#units i").addClass("wi-fahrenheit");
 			weather.convertToFahrenheit();
 		} else {
-			$("#units").html("C")
+			$("#units i").removeClass("wi-fahrenheit");
+			$("#units i").addClass("wi-celsius")
 			weather.convertToCelsius();
 		};
 		weather.celsius = !weather.celsius;
