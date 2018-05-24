@@ -1,0 +1,10 @@
+body{
+	background-size: cover;
+	background-position: center;
+	font-family: 'Lato', sans-serif;
+	color: black;
+}
+
+html{
+	height: 100%
+}

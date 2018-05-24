@@ -1,82 +1,93 @@
-var celsius = true;
-var weatherData = {
+var weather = {
 	cityName: "",
 	temperature: "",
-	weather: "",
-	icon: ""	
+	celsius: true,
+	type: "",
+	icon: "",
+	convertToFahrenheit:function() {
+		this.temperature = (this.temperature * 1.8 + 32).toFixed(1);
+	},
+	convertToCelsius: function() {
+		this.temperature = ((this.temperature - 32) * 0.5556).toFixed(1);
+	}		
 };
 
 init()
 
 function init() {
-	$(document).ready(function() {
-		setupUnitsButton();
-		navigator.geolocation.getCurrentPosition(success, errorLocation);
-	});
+	setupUnitsButton();
+	navigator.geolocation.getCurrentPosition(success, errorLocation);
 };
 
 function success(position){
-        var longitude = position.coords.longitude;
-        var latitude = position.coords.latitude;
+    var longitude = position.coords.longitude;
+    var latitude = position.coords.latitude;
 
-        var link = "https://fcc-weather-api.glitch.me/api/current?lat=" + latitude + "&lon=" + longitude;
+    var link = "https://fcc-weather-api.glitch.me/api/current?lat=" + latitude + "&lon=" + longitude;
 
+	$(document).ready(function() {
 		$.getJSON(link)
-			.done(showWeatherData)
+			.done(updateWeatherData)
 			.fail(errorWeather);
+	});
 
 }
 
-function showWeatherData(data) {
+function updateWeatherData(data) {
 	
 	weather.cityName = data.name;
 	weather.temperature = data.main.temp.toFixed(1);
-	weather.weather = data.weather[0].main
+	weather.type = data.weather[0].main;
 	weather.icon = data.weather[0].icon;
 
 	updateCityName();
-	updateMainWeather();
+	updateWeatherType();
 	updateTemperature();
 	updateWeatherIcon();
+	updatedBackgroundImage();
 };
+
+function updatedBackgroundImage(){
+	var imageUrl;
+	if(weather.type === "Clear"){
+		imageUrl = "https://images.unsplash.com/photo-1500320821405-8fc1732209ca?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=60dabe438f1984eec277736ff1004ac8&auto=format&fit=crop&w=1950&q=80";
+	} else if (weather.type === "Clouds") {
+		imageUrl = "https://images.unsplash.com/photo-1518277748204-ba05cb84d9f5?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=9ea3b1a82b08a4ba9764a8788c9cdaaa&auto=format&fit=crop&w=1949&q=80";
+	}
+	$("body").css("background-image", "url(" + imageUrl + ")")
+	
+}
 
 function updateCityName(){
 	$("#cityName").html(weather.cityName);
 }
 
-function updateMainWeather(){
-	$("#temperature").html(weather.temperature);
+function updateWeatherType(){
+	$("#weather").html(weather.type);
 }
 
 function updateTemperature(){
-	$("#weather").html(weather.weather);
+	$("#temperature").html(weather.temperature);
 }
 
 function updateWeatherIcon(){
 	$("#weatherIcon").attr({"src": weather.icon,
-							"alt": weather.weather + " Icon"});
+							"alt": weather.type + " Icon"});
 }
 
 function setupUnitsButton() {
 	$("#units").click(function(){
-		if(celsius){
+		if(weather.celsius){
 			$("#units").html("F");
-			weather.temperature = convertToFahrenheit(weather.temperature);
+			weather.convertToFahrenheit();
 		} else {
 			$("#units").html("C")
-			weather.temperature = convertToCelsius(weather.temperature);
+			weather.convertToCelsius();
 		};
-		celsius = !celsius;
-		$("#temperature").html(weather.temperature);
+		weather.celsius = !weather.celsius;
+
+		updateTemperature();
 	});
-};
-
-function convertToFahrenheit(temperature) {
-	return (temperature * 1.8 + 32).toFixed(1);
-};
-
-function convertToCelsius(temperature) {
-	return ((temperature - 32) * 0.5556).toFixed(1);
 };
 
 function errorWeather() {
