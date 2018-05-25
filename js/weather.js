@@ -18,7 +18,9 @@ var weather = {
 	}		
 };
 
-init()
+$(document).ready(function() {
+	init()
+});
 
 function init() {
 	setupUnitsButton();
@@ -31,11 +33,10 @@ function success(position){
 
     var link = "https://fcc-weather-api.glitch.me/api/current?lat=" + latitude + "&lon=" + longitude;
 
-	$(document).ready(function() {
-		$.getJSON(link)
-			.done(updateWeatherData)
-			.fail(errorWeather);
-	});
+	
+	$.getJSON(link)
+		.done(updateWeatherData)
+		.fail(errorWeather);
 
 }
 
